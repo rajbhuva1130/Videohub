@@ -40,7 +40,6 @@ We approached the development process methodically by first understanding the co
 ### Design & SQL Relationships
 
 Most of the early development was spent on designing the application's features and how they would inform the database endpoints. The goal was to create a comprehensive relationship diagram that would lead to a smooth development process. Two key design pieces were: the ability for users to easily post videos, add comments, and reply to comments; and the ability to connect with (or follow) other users to provide a curated list of videos based on their interests.
- 
 
 ### The Database
 
