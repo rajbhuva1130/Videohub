@@ -17,7 +17,7 @@ nested_comment_schema = NestedCommentSchema()
 genre_schema = GenreSchema()
 populate_genre = PopulateGenreSchema()
 
-# router = Blueprint('videos', __name__)
+# router = Blueprint(__name__, 'videos')
 router = Blueprint("videos", __name__)
 
 

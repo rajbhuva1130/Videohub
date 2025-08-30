@@ -26,20 +26,19 @@ class User(db.Model, BaseModel):
               )
   
   @hybrid_property
-  def user_password(self):
-    # This property is write-only; reading returns None
-    return None
+  def password_hash_property(self):
+    return self.password_hash
 
-  @user_password.setter
-  def set_user_password(self, value):
+  @property
+  def password(self):
+    # This property is write-only; reading it raises an error
+    raise AttributeError("Password is write-only.")
+
+  @password.setter
+  def password(self, value):
     if not re.match(r'^(?=.*\W)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{5,20}$', value):
       raise AssertionError('Password must contain 1 capital, 1 number, one symbol and be between 5 and 20 characters long.')
     self.password_hash = bcrypt.generate_password_hash(value).decode('utf-8')
-
-  @hybrid_property
-  def password_hash_property(self):
-    # Return the hashed password (do not expose the plain password)
-    return self.password_hash
 
   def validate_password(self, password_plaintext):
     return bcrypt.check_password_hash(self.password_hash, password_plaintext)
@@ -75,3 +74,4 @@ class User(db.Model, BaseModel):
     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
       raise AssertionError('Provided email is not an email address') 
     return email
+  

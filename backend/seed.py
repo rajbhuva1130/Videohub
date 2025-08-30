@@ -1,8 +1,9 @@
-from app import app, db
+from app import app, db, bcrypt # Import bcrypt here
 from models.user import User
 from models.comments import Comment, NestedComment
 from models.genre import Genre
 from models.video import Video
+# You can remove the unused import 'from werkzeug.security import generate_password_hash'
 
 with app.app_context():
     db.drop_all()
@@ -26,60 +27,52 @@ with app.app_context():
 
     print('Genres Created!')
 
-    # Users
-    admin = User(
-        username='Admin',  # type: ignore
-        email='hello@admin.com',  # type: ignore
-        password='Hello1!')  # type: ignore
 
-    user1 = User(
-        username='User One',  # type: ignore
-        email='user1@example.com',  # type: ignore
-        password='User1!',  # type: ignore
-        genres=[web_development, photography, music])  # type: ignore
+    # ---------- Users ----------
+    admin = User(username='Admin', email='hello@admin.com') # type: ignore
+    admin.password = 'Hello1!' # Now uses the correct setter # type: ignore
+    # The password_hash attribute is now set automatically by the setter.
 
-    user2 = User(
-        username='User Two',  # type: ignore
-        email='user2@example.com',  # type: ignore
-        password='User2!',  # type: ignore
-        genres=[web_development, cooking, ui_ux_design])  # type: ignore
+    user1 = User(username='User One', email='user1@example.com') # type: ignore
+    user1.password = 'User1!' # Now uses the correct setter # type: ignore
 
-    user3 = User (
-        username='User Three',  # type: ignore
-        email='user3@example.com',  # type: ignore
-        password='User3!',  # type: ignore
-        genres=[web_development, music, art_illustration])  # type: ignore
+    user2 = User(username='User Two', email='user2@example.com') # type: ignore
+    user2.password = 'User2!' # Now uses the correct setter # type: ignore
 
-    user4 = User (
-        username='User Four',  # type: ignore
-        email='user4@example.com',  # type: ignore
-        password='User4!',  # type: ignore
-        following=[user3, user2],  # type: ignore
-        genres=[art_illustration, writing, film_and_video])  # type: ignore
+    user3 = User(username='User Three', email='user3@example.com') # type: ignore
+    user3.password = 'User3!' # Now uses the correct setter # type: ignore
 
-    user5 = User (
-        username='User Five',  # type: ignore
-        email='user5@example.com',  # type: ignore
-        password='User5!',  # type: ignore
-        following=[user2, user1],  # type: ignore
-        genres=[lifestyle, animation, film_and_video])  # type: ignore
+    user4 = User(username='User Four', email='user4@example.com') # type: ignore
+    user4.password = 'User4!' # Now uses the correct setter # type: ignore
 
-    user6 = User (
-        username='User Six',  # type: ignore
-        email='user6@example.com',  # type: ignore
-        password='User6!',  # type: ignore
-        following=[user5, user4, user3],  # type: ignore
-        genres=[lifestyle, graphic_design, art_illustration])  # type: ignore
+    user5 = User(username='User Five', email='user5@example.com') # type: ignore
+    user5.password = 'User5!' # Now uses the correct setter # type: ignore  
 
-    user7 = User (
-        username='User Seven',  # type: ignore
-        email='user7@example.com',  # type: ignore
-        password='User7!',  # type: ignore
-        following=[user5, user1, user6],  # type: ignore
-        genres=[cooking, lifestyle])  # type: ignore
+    user6 = User(username='User Six', email='user6@example.com') # type: ignore
+    user6.password = 'User6!' # Now uses the correct setter # type: ignore
 
-    db.session.add_all([user2, user1, user3, user4, admin, user5, user6, user7])
+    user7 = User(username='User Seven', email='user7@example.com') # type: ignore
+    user7.password = 'User7!' # Now uses the correct setter # type: ignore  
 
+    # Add all users to the session first (prevents SAWarning when assigning relationships)
+    db.session.add_all([admin, user1, user2, user3, user4, user5, user6, user7])
+    db.session.flush()  # persist them and give them ids
+
+    # Now assign relationships (following, genres) safely
+    user1.genres = [web_development, photography, music] # type: ignore
+    user2.genres = [web_development, cooking, ui_ux_design] # type: ignore
+    user3.genres = [web_development, music, art_illustration] # type: ignore
+    user4.genres = [art_illustration, writing, film_and_video] # type: ignore
+    user4.following = [user3, user2] # type: ignore
+    user5.genres = [lifestyle, animation, film_and_video] # type: ignore
+    user5.following = [user2, user1] # type: ignore
+    user6.genres = [lifestyle, graphic_design, art_illustration] # type: ignore
+    user6.following = [user5, user4, user3] # type: ignore
+    user7.genres = [cooking, lifestyle] # type: ignore
+    user7.following = [user5, user1, user6] # type: ignore
+
+    # Commit the users & relationships (you can continue adding videos/comments after or before)
+    db.session.flush()
     print('Users Created!')
     
     # Videos
