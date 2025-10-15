@@ -58,3 +58,113 @@ With the backend roughed out and major endpoints ready to be used it was time fo
 ### Styling & SASS
 
 The look and feel of the site was key to a good user experience during early development we set out to develop a style guide in the form of fonts, color schemes, site layout and logos. This included developing a visual language that would be consistent across the site - buttons, forms and video windows styled in a clean and easy to use way.
+
+
+🚀 Installation & Setup Guide
+🧩 Prerequisites
+Make sure you have the following installed:
+Python 3.10+
+Node.js (v16+) and npm
+PostgreSQL
+Git
+
+🐍 Backend Setup (Flask API)
+
+Clone the repository
+```bash
+git clone https://github.com/yourusername/videohub.git
+cd videohub/backend
+```
+
+Create a virtual environment
+```bash
+python -m venv venv
+source venv/bin/activate   # For Mac/Linux
+venv\Scripts\activate      # For Windows
+```
+
+Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+Configure environment variables
+Create a .env file in the backend folder:
+```bash
+DATABASE_URL=postgresql://username:password@localhost/videohub_db
+SECRET_KEY=your_secret_key
+FLASK_ENV=development
+```
+
+Initialize the database
+```bash
+flask db init
+flask db migrate
+flask db upgrade
+```
+
+Run the Flask server
+```bash
+cd backend #if not in backend
+flask run
+```
+
+The backend will run on http://localhost:5000
+
+⚛️ Frontend Setup (React)
+
+Navigate to frontend folder
+```bash
+cd ../frontend
+```
+
+Install dependencies
+```bash
+npm install
+```
+
+Create an .env file
+
+REACT_APP_API_URL=http://localhost:5000
+
+Run the React development server
+```bash
+cd Frontend #if not in frontend
+npm run serve:frontend
+```
+
+The frontend will run on http://localhost:3000
+
+🌐 Deployment
+
+Backend (Flask): Deploy using Heroku or Render.
+
+Frontend (React): Deploy using Netlify or Vercel.
+
+Make sure the environment variables match production database and API URLs.
+
+Images
+
+<img width="941" height="877" alt="Screenshot 2025-10-15 160551" src="https://github.com/user-attachments/assets/a4e2830d-dafc-40dc-b125-bc00a4880e0b" />
+
+-----
+
+<img width="938" height="886" alt="Screenshot 2025-10-15 160541" src="https://github.com/user-attachments/assets/ef26cade-98ac-44d1-a8ed-4cf8c76bf0d3" />
+
+-----
+
+<img width="909" height="870" alt="Screenshot 2025-10-15 160824" src="https://github.com/user-attachments/assets/a1bb834f-9573-436b-8685-710cb801cffa" />
+
+-----
+
+<img width="465" height="495" alt="Screenshot 2025-10-15 160617" src="https://github.com/user-attachments/assets/cdcd32ef-4cf9-4780-a46a-554335d3cede" />
+
+-----
+
+<img width="930" height="892" alt="Screenshot 2025-10-15 160610" src="https://github.com/user-attachments/assets/5261cfbd-547b-41ff-9209-f950cf46e032" />
+
+-----
+
+👥 Contributors
+
+Rajkumar Bhuva — Backend Developer
